@@ -47,5 +47,6 @@ class PrimesTest {
         assertEquals(541, Primes.nthPrime(100));
         assertEquals(4127, Primes.nthPrime(567));
         assertEquals(104729, Primes.nthPrime(10_000));
+        assertEquals(-1, Primes.nthPrime(-1));
     }
 }

@@ -41,7 +41,8 @@ public class Primes {
                 break;
             }
         }
-        return Converter.listToArrLong(primeFactors);
+        if (primeFactors.size() == 0) return new long[0];
+        return Converter.listToArr(primeFactors);
     }
     public static boolean isPrime(long n) {
         if (n % 2 == 0) return false;
@@ -54,7 +55,7 @@ public class Primes {
     }
     public static int nthPrime(int n) {
         int upperBound = upperBoundForNthPrime(n);
-        boolean[] primes = sieveOfPrimes(upperBound);
+        boolean[] primes = sieveOfPrimes(upperBound+1);
         int counter = 0;
 
         for (int i = 0; i <= upperBound; i++) {

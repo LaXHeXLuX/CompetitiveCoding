@@ -29,7 +29,7 @@ public class PolygonalNumber {
             if (sides < 0) break;
             if (isPolygonalNumber(sides, x)) possibleSides.add(sides);
         }
-
-        return Converter.listToArrInt(possibleSides);
+        if (possibleSides.size() == 0) return new int[0];
+        return Converter.listToArr(possibleSides);
     }
 }
