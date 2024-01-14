@@ -7,6 +7,9 @@ public class Pandigital {
 
         return isPandigital(digits, startingDigit);
     }
+    public static boolean isPandigital(int[] digits) {
+        return isPandigital(digits, 1);
+    }
     public static boolean isPandigital(int[] digits, int startingDigit) {
         digits = ArrayFunctions.mergeSort(digits);
 
