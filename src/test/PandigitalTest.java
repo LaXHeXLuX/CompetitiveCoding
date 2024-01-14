@@ -12,6 +12,10 @@ class PandigitalTest {
         assertFalse(Pandigital.isPandigital(12321));
         assertFalse(Pandigital.isPandigital(95768));
         assertTrue(Pandigital.isPandigital(95768, 5));
+
+        int[] digits = {5, 9, 6, 7, 4, 8};
+        assertFalse(Pandigital.isPandigital(digits));
+        assertTrue(Pandigital.isPandigital(digits, 4));
     }
 
     @Test

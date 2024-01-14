@@ -150,6 +150,8 @@ class ArrayFunctionsTest {
 
         boolean[] arrBoolean = {true, true, false};
         assertArrayEquals(new boolean[] {true, false}, ArrayFunctions.subArray(arrBoolean, 1, 2));
+
+        assertThrows(RuntimeException.class, () -> ArrayFunctions.subArray(new String[0], -1, 0));
     }
 
     @Test
