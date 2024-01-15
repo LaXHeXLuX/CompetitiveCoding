@@ -1,5 +1,8 @@
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 @SuppressWarnings("unchecked")
 public class ArrayFunctions {
 
@@ -129,5 +132,28 @@ public class ArrayFunctions {
         T[] result = Arrays.copyOf(array1, length);
         System.arraycopy(array2, 0, result, array1.length, array2.length);
         return result;
+    }
+    public static <T> T commonElements(T arr1, T arr2) {
+        T[] wrapperArr1 = Converter.toWrapperArray(arr1);
+        T[] wrapperArr2 = Converter.toWrapperArray(arr2);
+        return Converter.toPrimitiveArray(commonElements(wrapperArr1, wrapperArr2));
+    }
+    public static <T> T[] commonElements(T[] arr1, T[] arr2) {
+        if (arr1.length == 0 || arr2.length == 0) {
+            return (T[]) Array.newInstance(arr1.getClass().getComponentType(), 0);
+        }
+        List<T> commonElements = new ArrayList<>();
+        boolean[] taken = new boolean[arr2.length];
+        for (T t : arr1) {
+            for (int i = 0; i < arr2.length; i++) {
+                if (taken[i]) continue;
+                if (t.equals(arr2[i])) {
+                    commonElements.add(t);
+                    taken[i] = true;
+                    break;
+                }
+            }
+        }
+        return Converter.toWrapperArray(Converter.listToArr(commonElements, arr1.getClass().getComponentType()));
     }
 }

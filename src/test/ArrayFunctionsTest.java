@@ -168,4 +168,20 @@ class ArrayFunctionsTest {
 
         assertArrayEquals(new boolean[] {true, false}, ArrayFunctions.concatenate(new boolean[] {true}, new boolean[] {false}));
     }
+
+    @Test
+    void commonElements() {
+        Object[] arrObject1 = {1, '2', "3", 4L, 10.0};
+        Object[] arrObject2 = {2, "3", 4, 5f, 10.0, 3, 10};
+        assertArrayEquals(arrObject1, ArrayFunctions.commonElements(arrObject1, arrObject1));
+        assertArrayEquals(new Object[] {"3", 10.0}, ArrayFunctions.commonElements(arrObject1, arrObject2));
+
+        int[] arrInt1 = {1, 2, 3};
+        int[] arrInt2 = {3, 4, 5};
+        assertArrayEquals(new int[] {3}, ArrayFunctions.commonElements(arrInt1, arrInt2));
+
+        String[] arrString1 = {"hello", "world", "I", "was", "here", "here", "here"};
+        String[] arrString2 = {"hello", "hello", "hello", "I", "here"};
+        assertArrayEquals(new String[] {"hello", "I", "here"}, ArrayFunctions.commonElements(arrString1, arrString2));
+    }
 }
