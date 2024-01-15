@@ -34,11 +34,11 @@ class PrimesTest {
 
     @Test
     void isPrimeBigInteger() {
-        assertTrue(Primes.isPrime(782948398248371L));
-        assertTrue(Primes.isPrime(647340319259941L));
-        assertFalse(Primes.isPrime(100000000000000000L));
-        assertFalse(Primes.isPrime(999999999999999999L));
-        assertFalse(Primes.isPrime(395196502485130712L));
+        assertTrue(Primes.isPrime(1012346665879L));
+        assertTrue(Primes.isPrime(24738041398529L));
+        assertFalse(Primes.isPrime(10000000000000000L));
+        assertFalse(Primes.isPrime(99999999999999999L));
+        assertFalse(Primes.isPrime(39519650248513071L));
     }
 
     @Test
@@ -48,5 +48,25 @@ class PrimesTest {
         assertEquals(4127, Primes.nthPrime(567));
         assertEquals(104729, Primes.nthPrime(10_000));
         assertEquals(-1, Primes.nthPrime(-1));
+    }
+
+    @Test
+    void areRelativePrimes() {
+        for (int i = 2; i < 10; i++) {
+            assertTrue(Primes.areRelativePrimes(1, i));
+        }
+
+        assertFalse(Primes.areRelativePrimes(6, 9));
+        assertTrue(Primes.areRelativePrimes(2, 7));
+        assertFalse(Primes.areRelativePrimes(21, 70));
+        assertTrue(Primes.areRelativePrimes(81, 64));
+
+        long[] primes1 = {2};
+        long[] primes2 = {2, 3};
+        long[] primes3 = {7, 11};
+
+        assertFalse(Primes.areRelativePrimes(primes1, primes2));
+        assertTrue(Primes.areRelativePrimes(primes1, primes3));
+        assertTrue(Primes.areRelativePrimes(primes2, primes3));
     }
 }

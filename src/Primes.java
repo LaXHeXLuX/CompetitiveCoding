@@ -70,4 +70,26 @@ public class Primes {
         double logN = Math.log(n);
         return (int) (n*logN + n*Math.log(logN));
     }
+
+    public static boolean areRelativePrimes(long n1, long n2) {
+        if (n1 > n2) {
+            long temp = n1;
+            n1 = n2;
+            n2 = temp;
+        }
+        if (n1 == 1) return true;
+
+        long[] primes1 = findPrimeFactors(n1);
+        if (n2 % primes1[0] == 0) return false;
+        for (int i = 1; i < primes1.length; i++) {
+            if (primes1[i] == primes1[i-1]) continue;
+            if (n2 % primes1[1] == 0) return false;
+        }
+
+        return true;
+    }
+
+    public static boolean areRelativePrimes(long[] primes1, long[] primes2) {
+        return ArrayFunctions.commonElements(primes1, primes2).length == 0;
+    }
 }
