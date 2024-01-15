@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Converter {
-    @SuppressWarnings("unchecked")
     public static <T> T listToArr(List<?> list) {
         if (list.isEmpty()) {
             throw new IllegalArgumentException("listToArr: list cannot be empty!");
         }
-        T[] arr = (T[]) java.lang.reflect.Array.newInstance(list.get(0).getClass(), list.size());
+        return listToArr(list, list.get(0).getClass());
+    }
+    @SuppressWarnings("unchecked")
+    public static <T> T listToArr(List<?> list, Class<?> type) {
+        T[] arr = (T[]) java.lang.reflect.Array.newInstance(type, list.size());
         return toPrimitiveArray(list.toArray(arr));
     }
     public static <T> T deepListToArr(List<?> list) {

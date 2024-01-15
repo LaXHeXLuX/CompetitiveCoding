@@ -61,18 +61,26 @@ class ConverterTest {
         assertArrayEquals(new int[] {1, 2, 3}, Converter.listToArr(listInt));
         List<Integer> listOfInt = List.of(3, 2, 1);
         assertArrayEquals(new int[] {3, 2, 1}, Converter.listToArr(listOfInt));
+
         List<String> listString = new ArrayList<>();
         listString.add("This"); listString.add("is"); listString.add("working");
         assertArrayEquals(new String[] {"This", "is", "working"}, Converter.listToArr(listString));
+
         List<Boolean> listBoolean = List.of(true, false, true, true);
         assertArrayEquals(new boolean[] {true, false, true, true}, Converter.listToArr(listBoolean));
+
         List<Long> listLong = new ArrayList<>();
         listLong.add(1_000_000L); listLong.add(1_000_000_000_000L); listLong.add(1_000_000_000_000_000_000L);
         assertArrayEquals(new long[] {1_000_000L, 1_000_000_000_000L, 1_000_000_000_000_000_000L}, Converter.listToArr(listLong));
+
         List<int[]> listArrInt = new ArrayList<>();
         listArrInt.add(new int[] {1, 2, 3}); listArrInt.add(new int[] {-1000});
         assertArrayEquals(new int[][] {new int[] {1, 2, 3}, new int[] {-1000}}, Converter.listToArr(listArrInt));
+
         assertThrows(IllegalArgumentException.class, () -> Converter.listToArr(new ArrayList<>()));
+
+        List<Object> listObject = List.of(1, "2", '3', 4L, 5.0f);
+        assertArrayEquals(new Object[] {1, "2", '3', 4L, 5.0f}, Converter.listToArr(listObject, Object.class));
     }
 
     @Test
