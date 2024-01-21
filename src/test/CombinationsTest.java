@@ -28,13 +28,13 @@ class CombinationsTest {
 
     @Test
     void factorialLong() {
-        long temp = Combinations.factorialLong(1);
+        long temp = Combinations.factorial(1);
         assertEquals(1, temp);
         for (int i = 2; i < 10; i++) {
             temp *= i;
-            assertEquals(temp, Combinations.factorialLong(i));
+            assertEquals(temp, Combinations.factorial(i));
         }
-        assertEquals(2432902008176640000L, Combinations.factorialLong(20));
+        assertEquals(2432902008176640000L, Combinations.factorial(20));
     }
 
     @Test
@@ -83,6 +83,13 @@ class CombinationsTest {
         assertTrue(Combinations.isPermutationOf(new int[] {1, 2, 3}, new int[] {3, 1, 2}));
         assertFalse(Combinations.isPermutationOf(new int[] {1}, new int[] {1, 1, 1}));
         assertFalse(Combinations.isPermutationOf(new int[] {}, new int[] {0}));
+
+        for (int i = 0; i < 20; i++) {
+            assertTrue(Combinations.isPermutationOf(i, i));
+        }
+        assertTrue(Combinations.isPermutationOf(9876, 6978));
+        assertFalse(Combinations.isPermutationOf(1, 111));
+        assertFalse(Combinations.isPermutationOf(123, 143));
     }
 
     @Test

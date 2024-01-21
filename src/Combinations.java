@@ -14,7 +14,7 @@ public class Combinations {
         }
         return factorial;
     }
-    public static long factorialLong(int n) {
+    public static long factorial(int n) {
         if (n < 0) return 0L;
         if (n < 2) return 1L;
         long factorial = 1;
@@ -31,8 +31,8 @@ public class Combinations {
         return factorial1.divide(factorial2.multiply(factorial3));
     }
     public static long nChooseMOrderMattersLong(int n, int m) {
-        long factorial1 = factorialLong(n);
-        long factorial2 = factorialLong(n-m);
+        long factorial1 = factorial(n);
+        long factorial2 = factorial(n-m);
         if (factorial1 < 0 || factorial2 < 0) throw new RuntimeException("Arguments too large!");
         return factorial1 / factorial2;
     }
@@ -63,7 +63,7 @@ public class Combinations {
     public static int[][] findPermutations(int[] arr) {
         if (arr.length == 0) return new int[][]{};
         if (arr.length == 1) return new int[][]{arr};
-        int[][] permutations = new int[(int) Combinations.factorialLong(arr.length)][];
+        int[][] permutations = new int[(int) Combinations.factorial(arr.length)][];
         arr = ArrayFunctions.mergeSort(arr);
         int[] newArr0 = new int[arr.length];
         System.arraycopy(arr, 0, newArr0, 0, newArr0.length);
@@ -103,6 +103,9 @@ public class Combinations {
         int[] restOfArr = new int[i+1];
         System.arraycopy(arr, 0, restOfArr, 0, restOfArr.length);
         return ArrayFunctions.concatenate(restOfArr, arrToBeSorted);
+    }
+    public static boolean isPermutationOf(long n1, long n2) {
+        return isPermutationOf(Converter.digitArray(n1), Converter.digitArray(n2));
     }
     public static boolean isPermutationOf(int[] arr1, int[] arr2) {
         if (arr1.length != arr2.length) return false;
