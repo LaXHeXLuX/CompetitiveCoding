@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -70,21 +71,24 @@ public class ArrayFunctions {
         return newArr;
     }
     public static <T> T mergeSort(T arr) {
-        return Converter.toPrimitiveArray(mergeSort(Converter.toWrapperArray(arr)));
+        return mergeSort(arr, (Comparator<T>) Comparator.naturalOrder());
     }
-    public static <T> T[] mergeSort(T[] arr) {
+    public static <T> T mergeSort(T arr, Comparator<T> comparator) {
+        return Converter.toPrimitiveArray(mergeSort(Converter.toWrapperArray(arr), comparator));
+    }
+    public static <T> T[] mergeSort(T[] arr, Comparator<T> comparator) {
         if (arr.length <= 1) return arr;
         T[] arr1 = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length/2);
         T[] arr2 = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length - arr.length/2);
         System.arraycopy(arr, 0, arr1, 0, arr1.length);
         System.arraycopy(arr, arr1.length, arr2, 0, arr2.length);
-        arr1 = mergeSort(arr1);
-        arr2 = mergeSort(arr2);
+        arr1 = mergeSort(arr1, comparator);
+        arr2 = mergeSort(arr2, comparator);
         T[] sorted = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length);
         int index1 = 0;
         int index2 = 0;
         for (int i = 0; i < sorted.length; i++) {
-            if (index2 == arr2.length || index1 < arr1.length && Comparer.compareTo(arr1[index1], arr2[index2]) <= 0) {
+            if (index2 == arr2.length || index1 < arr1.length && comparator.compare(arr1[index1], arr2[index2]) <= 0) {
                 sorted[i] = arr1[index1];
                 index1++;
             } else {
@@ -93,6 +97,9 @@ public class ArrayFunctions {
             }
         }
         return sorted;
+    }
+    public static <T> T[] mergeSort(T[] arr) {
+        return mergeSort(arr, (Comparator<T>) Comparator.naturalOrder());
     }
     public static <T> T reverseArray(T arr) {
         return Converter.toPrimitiveArray(reverseArray(Converter.toWrapperArray(arr)));

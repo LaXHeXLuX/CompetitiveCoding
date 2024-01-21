@@ -173,8 +173,11 @@ class ArrayFunctionsTest {
     void commonElements() {
         Object[] arrObject1 = {1, '2', "3", 4L, 10.0};
         Object[] arrObject2 = {2, "3", 4, 5f, 10.0, 3, 10};
+        Object[] arrObject3 = {};
         assertArrayEquals(arrObject1, ArrayFunctions.commonElements(arrObject1, arrObject1));
         assertArrayEquals(new Object[] {"3", 10.0}, ArrayFunctions.commonElements(arrObject1, arrObject2));
+        assertArrayEquals(new Object[] {}, ArrayFunctions.commonElements(arrObject1, arrObject3));
+        assertArrayEquals(new Object[] {}, ArrayFunctions.commonElements(arrObject2, arrObject3));
 
         int[] arrInt1 = {1, 2, 3};
         int[] arrInt2 = {3, 4, 5};
