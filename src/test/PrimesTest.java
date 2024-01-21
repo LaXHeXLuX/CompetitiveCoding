@@ -33,7 +33,10 @@ class PrimesTest {
     }
 
     @Test
-    void isPrimeBigInteger() {
+    void isPrime() {
+        assertFalse(Primes.isPrime(1));
+        assertTrue(Primes.isPrime(2));
+
         assertTrue(Primes.isPrime(1012346665879L));
         assertTrue(Primes.isPrime(24738041398529L));
         assertFalse(Primes.isPrime(10000000000000000L));
@@ -68,5 +71,26 @@ class PrimesTest {
         assertFalse(Primes.areRelativePrimes(primes1, primes2));
         assertTrue(Primes.areRelativePrimes(primes1, primes3));
         assertTrue(Primes.areRelativePrimes(primes2, primes3));
+    }
+
+    @Test
+    void eulersTotient() {
+        assertEquals(0, Primes.eulersTotient(1));
+        assertEquals(1, Primes.eulersTotient(2));
+        assertEquals(2, Primes.eulersTotient(3));
+        assertEquals(2, Primes.eulersTotient(3));
+
+        assertEquals(6, Primes.eulersTotient(9));
+        assertEquals(10, Primes.eulersTotient(11));
+
+        assertEquals(79180, Primes.eulersTotient(87109));
+    }
+
+    @Test
+    void upperBoundForNumberOfSmallerPrimes() {
+        assertEquals(0, Primes.upperBoundForNumberOfSmallerPrimes(1));
+        assertTrue(Primes.upperBoundForNumberOfSmallerPrimes(10) >= 4);
+        assertTrue(Primes.upperBoundForNumberOfSmallerPrimes(100) >= 25);
+        assertTrue(Primes.upperBoundForNumberOfSmallerPrimes(1_000_000) >= 78_498);
     }
 }

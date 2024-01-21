@@ -45,6 +45,8 @@ public class Primes {
         return Converter.listToArr(primeFactors);
     }
     public static boolean isPrime(long n) {
+        if (n < 2) return false;
+        if (n == 2) return true;
         if (n % 2 == 0) return false;
 
         for (int i = 3; i < Math.sqrt(n); i+=2) {
@@ -70,26 +72,29 @@ public class Primes {
         double logN = Math.log(n);
         return (int) (n*logN + n*Math.log(logN));
     }
-
-    public static boolean areRelativePrimes(long n1, long n2) {
-        if (n1 > n2) {
-            long temp = n1;
-            n1 = n2;
-            n2 = temp;
+    public static int upperBoundForNumberOfSmallerPrimes(int n) {
+        if (n <= 1) {
+            return 0;
         }
-        if (n1 == 1) return true;
-
-        long[] primes1 = findPrimeFactors(n1);
-        if (n2 % primes1[0] == 0) return false;
-        for (int i = 1; i < primes1.length; i++) {
-            if (primes1[i] == primes1[i-1]) continue;
-            if (n2 % primes1[1] == 0) return false;
-        }
-
-        return true;
+        return (int) ((n / Math.log(n)) * (1 + 1.2762 / Math.log(n)));
     }
-
+    public static boolean areRelativePrimes(long n1, long n2) {
+        return Divisors.greatestCommonDivisor(n1, n2) == 1;
+    }
     public static boolean areRelativePrimes(long[] primes1, long[] primes2) {
         return ArrayFunctions.commonElements(primes1, primes2).length == 0;
+    }
+    public static long eulersTotient(long n) {
+        if (n == 1) return 0;
+        long[] primesFactors = findPrimeFactors(n);
+        return eulersTotient(primesFactors);
+    }
+    public static long eulersTotient(long[] primeFactors) {
+        long totient = (primeFactors[0]-1);
+        for (int i = 1; i < primeFactors.length; i++) {
+            if (primeFactors[i] == primeFactors[i-1]) totient *= primeFactors[i];
+            else totient *= primeFactors[i]-1;
+        }
+        return totient;
     }
 }
