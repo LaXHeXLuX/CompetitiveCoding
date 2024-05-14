@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,5 +47,18 @@ public class Divisors {
         if (a == 0) return b;
         if (b == 0) return a;
         return greatestCommonDivisorHelper(b, a%b);
+    }
+    public static BigInteger greatestBigCommonDivisor(BigInteger a, BigInteger b) {
+        if (a.compareTo(b) < 0) {
+            BigInteger temp = a;
+            a = b;
+            b = temp;
+        }
+        return greatestBigCommonDivisorHelper(a, b);
+    }
+    private static BigInteger greatestBigCommonDivisorHelper(BigInteger a, BigInteger b) {
+        if (a.equals(BigInteger.ZERO)) return b;
+        if (b.equals(BigInteger.ZERO)) return a;
+        return greatestBigCommonDivisorHelper(b, a.remainder(b));
     }
 }
