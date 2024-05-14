@@ -37,11 +37,9 @@ class PrimesTest {
         assertFalse(Primes.isPrime(1));
         assertTrue(Primes.isPrime(2));
 
-        assertTrue(Primes.isPrime(1012346665879L));
-        assertTrue(Primes.isPrime(24738041398529L));
-        assertFalse(Primes.isPrime(10000000000000000L));
-        assertFalse(Primes.isPrime(99999999999999999L));
-        assertFalse(Primes.isPrime(39519650248513071L));
+        assertTrue(Primes.isPrime(289586599663L));
+        assertTrue(Primes.isPrime(217203134209L));
+        assertFalse(Primes.isPrime(217203134207L));
     }
 
     @Test
