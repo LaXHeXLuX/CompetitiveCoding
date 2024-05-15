@@ -1,8 +1,14 @@
-public class Comparer {
-    public static <T> int compareTo(T el1, T el2) {
+import java.math.BigInteger;
+
+public class Generifier {
+    private static <T> void checkClass(T el1, T el2) {
         if (!el1.getClass().equals(el2.getClass())) {
             throw new IllegalArgumentException("compareTo: parameters are of different types!");
         }
+    }
+    public static <T> int compareTo(T el1, T el2) {
+        System.out.println(el1.getClass());
+        checkClass(el1, el2);
         if (el1.equals(el2)) return 0;
         switch (el1.getClass().getName()) {
             case "java.lang.Integer", "int" -> {
@@ -31,6 +37,9 @@ public class Comparer {
             }
             case "java.lang.String" -> {
                 return ((String) el1).compareTo((String) el2);
+            }
+            case "java.math.BigInteger" -> {
+                return ((BigInteger) el1).compareTo((BigInteger) el2);
             }
             default -> throw new IllegalArgumentException("Unsupported type: " + el1.getClass());
         }
