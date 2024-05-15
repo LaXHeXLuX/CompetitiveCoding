@@ -17,7 +17,6 @@ class PandigitalTest {
         assertFalse(Pandigital.isPandigital(digits));
         assertTrue(Pandigital.isPandigital(digits, 4));
     }
-
     @Test
     void groupIsPandigital() {
         assertTrue(Pandigital.groupIsPandigital(new int[] {2, 43, 816, 597}));

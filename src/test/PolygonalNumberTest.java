@@ -16,7 +16,6 @@ class PolygonalNumberTest {
         assertEquals(370, PolygonalNumber.polygonalNumberLong(10, 10));
         assertEquals(500051, PolygonalNumber.polygonalNumberLong(101, 101));
     }
-
     @Test
     void polygonalNumberBigInteger() {
         for (int i = 1; i < 10; i++) {
@@ -26,7 +25,6 @@ class PolygonalNumberTest {
         assertEquals(new BigInteger("498999502000000"), PolygonalNumber.polygonalNumberBigInteger(1_000, 1_000_000));
         assertEquals(new BigInteger("11470911303321"), PolygonalNumber.polygonalNumberBigInteger(7_777, 54_321));
     }
-
     @Test
     void isPolygonalNumber() {
         assertArrayEquals(new int[] {8}, PolygonalNumber.isPolygonalNumber(40));

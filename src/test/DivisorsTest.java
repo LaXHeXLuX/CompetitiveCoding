@@ -12,7 +12,6 @@ class DivisorsTest {
         assertArrayEquals(new long[] {1, 101}, Divisors.divisors(101));
         assertArrayEquals(new long[] {1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000}, Divisors.divisors(1000));
     }
-
     @Test
     void sumOfDivisors() {
         assertEquals(1, Divisors.sumOfDivisors(2));
@@ -20,7 +19,6 @@ class DivisorsTest {
         assertEquals(1, Divisors.sumOfDivisors(101));
         assertEquals(810, Divisors.sumOfDivisors(360));
     }
-
     @Test
     void greatestCommonDivisor() {
         for (int i = 1; i < 10; i++) {

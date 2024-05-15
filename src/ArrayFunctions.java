@@ -25,7 +25,7 @@ public class ArrayFunctions {
         int highIndex = arr.length-1;
         while (lowIndex != highIndex) {
             int middleIndex = (lowIndex + highIndex)/2;
-            int compareResult = Comparer.compareTo(arr[middleIndex], el);
+            int compareResult = Generifier.compareTo(arr[middleIndex], el);
             if (compareResult < 0) {
                 lowIndex = middleIndex+1;
             }

@@ -41,7 +41,7 @@ public class Primes {
                 break;
             }
         }
-        if (primeFactors.size() == 0) return new long[0];
+        if (primeFactors.isEmpty()) return new long[0];
         return Converter.listToArr(primeFactors);
     }
     public static boolean isPrime(long n) {

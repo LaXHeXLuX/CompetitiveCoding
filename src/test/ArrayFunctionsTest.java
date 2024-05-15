@@ -34,7 +34,6 @@ class ArrayFunctionsTest {
         assertFalse(ArrayFunctions.contains("november", arrString));
         assertFalse(ArrayFunctions.contains("", arrString));
     }
-
     @Test
     void sortedContains() {
         int[] arrInt = {0, 1, 5, 6, 77, 321};
@@ -53,7 +52,6 @@ class ArrayFunctionsTest {
         assertFalse(ArrayFunctions.sortedContains("m", arrString));
         assertFalse(ArrayFunctions.sortedContains("", arrString));
     }
-
     @Test
     void switchElement() {
         Object[] arrObject = {1, 'a', 3.5f, "good", 'a', 'b', 10, 1};
@@ -100,7 +98,6 @@ class ArrayFunctionsTest {
         assertArrayEquals(arrStringExpected1, ArrayFunctions.switchElement(arrString, "world", "dog"));
         assertArrayEquals(arrStringExpected2, ArrayFunctions.switchFirstElement(arrString, "world", "dog"));
     }
-
     @Test
     void mergeSort() {
         assertArrayEquals(new Object[] {}, ArrayFunctions.mergeSort(new Object[] {}));
@@ -116,7 +113,6 @@ class ArrayFunctionsTest {
         String[] arrStringExpected = {"absolutely", "array", "best", "ever", "is", "my", "this"};
         assertArrayEquals(arrStringExpected, ArrayFunctions.mergeSort(arrString));
     }
-
     @Test
     void reverseArray() {
         int[] arrInt = {1, 2, 3, 4};
@@ -128,7 +124,6 @@ class ArrayFunctionsTest {
         boolean[][][] deepArrBoolean = new boolean[][][] {{{true}, {true, false}}, {{false}}, {}};
         assertArrayEquals(new boolean[][][] {{}, {{false}}, {{true}, {true, false}}}, ArrayFunctions.reverseArray(deepArrBoolean));
     }
-
     @Test
     void removeIndex() {
         assertArrayEquals(new Object[] {}, ArrayFunctions.removeIndex(new Object[] {""}, 0));
@@ -139,7 +134,6 @@ class ArrayFunctionsTest {
 
         assertArrayEquals(new String[] {"yes", "no"}, ArrayFunctions.removeIndex(new String[] {"yes", "maybe", "no"}, 1));
     }
-
     @Test
     void subArray() {
         Object[] arrObject = {0, 'a', "hello", 1_000_000_000_000L, 2.5, true};
@@ -153,7 +147,6 @@ class ArrayFunctionsTest {
 
         assertThrows(RuntimeException.class, () -> ArrayFunctions.subArray(new String[0], -1, 0));
     }
-
     @Test
     void concatenate() {
         Object[] arrObject1 = {};
@@ -168,7 +161,6 @@ class ArrayFunctionsTest {
 
         assertArrayEquals(new boolean[] {true, false}, ArrayFunctions.concatenate(new boolean[] {true}, new boolean[] {false}));
     }
-
     @Test
     void commonElements() {
         Object[] arrObject1 = {1, '2', "3", 4L, 10.0};

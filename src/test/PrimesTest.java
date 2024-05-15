@@ -20,7 +20,6 @@ class PrimesTest {
         assertFalse(manyPrimes[34567]);
         assertFalse(manyPrimes[99999]);
     }
-
     @Test
     void findPrimeFactors() {
         assertArrayEquals(new long[] {}, Primes.findPrimeFactors(1));
@@ -31,7 +30,6 @@ class PrimesTest {
         assertArrayEquals(new long[] {2, 2, 2, 2, 2, 2, 2, 2}, Primes.findPrimeFactors(256));
         assertArrayEquals(new long[] {2, 2, 2, 2, 2, 5, 5, 5, 5, 5}, Primes.findPrimeFactors(100000));
     }
-
     @Test
     void isPrime() {
         assertFalse(Primes.isPrime(1));
@@ -41,7 +39,6 @@ class PrimesTest {
         assertTrue(Primes.isPrime(217203134209L));
         assertFalse(Primes.isPrime(217203134207L));
     }
-
     @Test
     void nthPrime() {
         assertEquals(2, Primes.nthPrime(1));
@@ -50,7 +47,6 @@ class PrimesTest {
         assertEquals(104729, Primes.nthPrime(10_000));
         assertEquals(-1, Primes.nthPrime(-1));
     }
-
     @Test
     void areRelativePrimes() {
         for (int i = 2; i < 10; i++) {
@@ -70,7 +66,6 @@ class PrimesTest {
         assertTrue(Primes.areRelativePrimes(primes1, primes3));
         assertTrue(Primes.areRelativePrimes(primes2, primes3));
     }
-
     @Test
     void eulersTotient() {
         assertEquals(0, Primes.eulersTotient(1));
@@ -83,7 +78,6 @@ class PrimesTest {
 
         assertEquals(79180, Primes.eulersTotient(87109));
     }
-
     @Test
     void upperBoundForNumberOfSmallerPrimes() {
         assertEquals(0, Primes.upperBoundForNumberOfSmallerPrimes(1));

@@ -8,18 +8,15 @@ class FractionTest {
     <T> void assertFractionEquals(T[] fractionAsArray, Fraction<T> fraction) {
         assertArrayEquals(fractionAsArray, fraction.asArray());
     }
-
     <T> void assertSimplifiedFractionEquals(T[] fractionAsArray, Fraction<T> fraction) {
         assertArrayEquals(fractionAsArray, fraction.simplify().asArray());
     }
-
     @Test
     void createFraction() {
         assertThrows(IllegalArgumentException.class, () -> new LongFraction(0, 0));
         assertFractionEquals(new Long[] {0L, 1L}, new LongFraction(0, 1));
         assertFractionEquals(new Long[] {-1L, 1L}, new LongFraction(1, -1));
     }
-
     @Test
     void simplifyFraction() {
         LongFraction fraction = new LongFraction(1, 1);
@@ -31,7 +28,6 @@ class FractionTest {
         fraction = new LongFraction(26, 8);
         assertFractionEquals(new Long[] {13L, 4L}, fraction.simplify());
     }
-
     @Test
     void addFraction() {
         LongFraction fraction1 = new LongFraction(1, 1);
@@ -49,7 +45,6 @@ class FractionTest {
         sum = fraction1.add(fraction2);
         assertSimplifiedFractionEquals(new Long[] {5L, 6L}, sum);
     }
-
     @Test
     void subtractFraction() {
         LongFraction fraction1 = new LongFraction(1, 1);
@@ -67,7 +62,6 @@ class FractionTest {
         difference = fraction1.subtract(fraction2);
         assertSimplifiedFractionEquals(new Long[] {1L, 6L}, difference);
     }
-
     @Test
     void multiplyFraction() {
         LongFraction fraction1 = new LongFraction(1, 1);
@@ -90,7 +84,6 @@ class FractionTest {
         product = fraction1.multiply(fraction2);
         assertSimplifiedFractionEquals(new Long[] {1L, 6L}, product);
     }
-
     @Test
     void divideFraction() {
         LongFraction dividend = new LongFraction(1, 1);
@@ -107,7 +100,6 @@ class FractionTest {
         quotient = fraction1.divide(fraction2);
         assertSimplifiedFractionEquals(new Long[] {3L, 2L}, quotient);
     }
-
     BigInteger[] bigArray(Long... longs) {
         BigInteger[] arr = new BigInteger[longs.length];
 
@@ -123,7 +115,6 @@ class FractionTest {
         assertFractionEquals(bigArray(0L, 1L), new BigFraction(BigInteger.ZERO, BigInteger.ONE));
         assertFractionEquals(bigArray(-1L, 1L), new BigFraction(BigInteger.ONE, BigInteger.valueOf(-1)));
     }
-
     @Test
     void simplifyBigFraction() {
         BigFraction fraction = new BigFraction(BigInteger.ONE, BigInteger.ONE);
@@ -135,7 +126,6 @@ class FractionTest {
         fraction = new BigFraction(BigInteger.valueOf(26L), BigInteger.valueOf(8L));
         assertFractionEquals(bigArray(13L, 4L), fraction.simplify());
     }
-
     @Test
     void addBigFraction() {
         BigFraction fraction1 = new BigFraction(BigInteger.ONE, BigInteger.ONE);
@@ -153,7 +143,6 @@ class FractionTest {
         sum = fraction1.add(fraction2);
         assertSimplifiedFractionEquals(bigArray(5L, 6L), sum);
     }
-
     @Test
     void subtractBigFraction() {
         BigFraction fraction1 = new BigFraction(BigInteger.ONE, BigInteger.ONE);
@@ -171,7 +160,6 @@ class FractionTest {
         difference = fraction1.subtract(fraction2);
         assertSimplifiedFractionEquals(bigArray(1L, 6L), difference);
     }
-
     @Test
     void multiplyBigFraction() {
         BigFraction fraction1 = new BigFraction(BigInteger.ONE, BigInteger.ONE);
@@ -194,7 +182,6 @@ class FractionTest {
         product = fraction1.multiply(fraction2);
         assertSimplifiedFractionEquals(bigArray(1L, 6L), product);
     }
-
     @Test
     void divideBigFraction() {
         BigFraction dividend = new BigFraction(BigInteger.ONE, BigInteger.ONE);

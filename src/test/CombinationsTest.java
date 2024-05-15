@@ -25,7 +25,6 @@ class CombinationsTest {
                 Combinations.factorialBigInteger(1_000)
         );
     }
-
     @Test
     void factorialLong() {
         long temp = Combinations.factorial(1);
@@ -36,7 +35,6 @@ class CombinationsTest {
         }
         assertEquals(2432902008176640000L, Combinations.factorial(20));
     }
-
     @Test
     void nChooseMBigInteger() {
         for (int i = 1; i < 5; i++) {
@@ -46,7 +44,6 @@ class CombinationsTest {
         }
         assertEquals(new BigInteger("100891344545564193334812497256"), Combinations.nChooseMBigInteger(100, 50));
     }
-
     @Test
     void nChooseMOrderMattersLong() {
         for (int i = 1; i < 5; i++) {
@@ -56,7 +53,6 @@ class CombinationsTest {
         assertEquals(30240, Combinations.nChooseMOrderMattersLong(10, 5));
         assertEquals(3628800, Combinations.nChooseMOrderMattersLong(10, 10));
     }
-
     @Test
     void ChooseNElements() {
         assertArrayEquals(new int[][] {}, Combinations.chooseNElements(new int[] {1, 2, 3}, 0, false));
@@ -66,14 +62,12 @@ class CombinationsTest {
         assertArrayEquals(new int[][] {{1, 2}, {1, 3}, {2, 1}, {2, 3}, {3, 1}, {3, 2}}, Combinations.chooseNElements(new int[] {1, 2, 3}, 2, true));
         assertArrayEquals(new int[][] {{1, 2, 3}, {1, 3, 2}, {2, 1, 3}, {2, 3, 1}, {3, 1, 2}, {3, 2, 1}}, Combinations.chooseNElements(new int[] {1, 2, 3}, 3, true));
     }
-
     @Test
     void findPermutations() {
         assertArrayEquals(new int[][] {{1, 2}, {2, 1}}, Combinations.findPermutations(new int[] {1, 2}));
         assertArrayEquals(new int[][] {{2, 2}}, Combinations.findPermutations(new int[] {2, 2}));
         assertArrayEquals(new int[][] {{1, 2, 2}, {2, 1, 2}, {2, 2, 1}}, Combinations.findPermutations(new int[] {1, 2, 2}));
     }
-
     @Test
     void isPermutationOf() {
         assertTrue(Combinations.isPermutationOf(new int[] {1, 2, 3}, new int[] {3, 1, 2}));
@@ -87,7 +81,6 @@ class CombinationsTest {
         assertFalse(Combinations.isPermutationOf(1, 111));
         assertFalse(Combinations.isPermutationOf(123, 143));
     }
-
     @Test
     void combinationsOfGrowingNumbers() {
         assertArrayEquals(new int[][] {{1, 1}, {1, 2}, {1, 3}, {2, 2}, {2, 3}, {3, 3}}, Combinations.combinationsOfGrowingNumbers(1, 3, 2));

@@ -21,7 +21,6 @@ class ConverterTest {
         assertArrayEquals(new Boolean[] {true, false}, Converter.toWrapperArray(booleanArr));
         assertArrayEquals(stringArr, Converter.toWrapperArray(stringArr));
     }
-
     @Test
     void deepToPrimitiveArray() {
         Integer[][] deepIntArr = {{1, 2}, {3, 4, 5}, {10}};
@@ -38,7 +37,6 @@ class ConverterTest {
         assertArrayEquals(new double[][][][][] {{{{{1.0}, {2.0, 3.0}}}}}, Converter.deepToPrimitiveArray(deepDoubleArr));
         assertThrows(IllegalArgumentException.class, () -> Converter.deepToPrimitiveArray(1));
     }
-
     @Test
     void toPrimitiveArray() {
         Integer[] intArr = {1, 2, 3, 4};
@@ -53,7 +51,6 @@ class ConverterTest {
         assertArrayEquals(intArr2, Converter.toPrimitiveArray(intArr2));
         assertArrayEquals(new String[] {"Hello"}, Converter.toPrimitiveArray(new String[] {"Hello"}));
     }
-
     @Test
     void listToArr() {
         List<Integer> listInt = new ArrayList<>();
@@ -82,7 +79,6 @@ class ConverterTest {
         List<Object> listObject = List.of(1, "2", '3', 4L, 5.0f);
         assertArrayEquals(new Object[] {1, "2", '3', 4L, 5.0f}, Converter.listToArr(listObject, Object.class));
     }
-
     @Test
     void deepListToArr() {
         List<Integer> listInt = new ArrayList<>();
@@ -92,12 +88,11 @@ class ConverterTest {
         assertArrayEquals(new int[][] {{1, 2}, {3, 4, 5}, {10}}, Converter.deepListToArr(deepListInt));
         List<List<List<Integer>>> deeperListInt = new ArrayList<>();
         deeperListInt.add(new ArrayList<>());
-        deeperListInt.get(0).add(new ArrayList<>());
-        deeperListInt.get(0).get(0).add(100);
+        deeperListInt.getFirst().add(new ArrayList<>());
+        deeperListInt.getFirst().getFirst().add(100);
         assertArrayEquals(new int[][][] {{{100}}}, Converter.deepListToArr(deeperListInt));
         assertThrows(IllegalArgumentException.class, () -> Converter.deepListToArr(new ArrayList<>()));
     }
-
     @Test
     void digitArray() {
         assertArrayEquals(new int[] {0}, Converter.digitArray(0));
@@ -108,7 +103,6 @@ class ConverterTest {
             Converter.digitArray(new BigInteger("123456789098765432123456789"))
         );
     }
-
     @Test
     void convertToBase() {
         assertArrayEquals(new int[] {1, 0, 1}, Converter.convertToBase(5, 2));
@@ -118,7 +112,6 @@ class ConverterTest {
         }
         assertArrayEquals(new int[] {2, 0, 2}, Converter.convertToBase(100, 7));
     }
-
     @Test
     void convertFromBase() {
         assertEquals(5, Converter.convertFromBase(new int[] {1, 0, 1}, 2));
@@ -128,7 +121,6 @@ class ConverterTest {
         }
         assertEquals(100, Converter.convertFromBase(new int[] {2, 0, 2}, 7));
     }
-
     @Test
     void booleanArrToIntArr() {
         boolean[] arrBoolean = {false, false, false, false, false, false, false, false};
@@ -136,7 +128,6 @@ class ConverterTest {
         assertArrayEquals(new int[] {0, 2}, Converter.booleanArrToIntArr(new boolean[] {true, false, true}));
         assertArrayEquals(new int[] {1}, Converter.booleanArrToIntArr(new boolean[] {false, true, false, false}));
     }
-
     @Test
     void booleanConversion() {
         boolean[] arrBoolean = {true, false, true, false};
@@ -144,7 +135,6 @@ class ConverterTest {
         assertArrayEquals(arrInt, Converter.booleanConversion(arrBoolean));
         assertArrayEquals(arrBoolean, Converter.booleanConversion(arrInt));
     }
-
     @Test
     void arrStringToArrInt() {
         String[] arrString = {"1", "10", "0", "0", "0", "1000000000"};
@@ -152,16 +142,14 @@ class ConverterTest {
         assertArrayEquals(arrInt, Converter.arrStringToArrInt(arrString));
         assertArrayEquals(new int[0], Converter.arrStringToArrInt(new String[0]));
     }
-
     @Test
     void digitFromArrayLong() {
         int[] digits = {1, 2, 3, 4};
         assertEquals(1234, Converter.digitFromArrayLong(digits));
         assertEquals(0, Converter.digitFromArrayLong(new int[0]));
     }
-
     @Test
-    void covertTo() {
+    void convertTo() {
         Integer intValue = 42;
 
         assertEquals(42L, Converter.convertNumberTo(Long.class, intValue));
