@@ -3,13 +3,11 @@ import java.math.BigInteger;
 public class Generifier {
     private static <T> void checkClass(T el1, T el2) {
         if (!el1.getClass().equals(el2.getClass())) {
-            throw new IllegalArgumentException("compareTo: parameters are of different types!");
+            throw new IllegalArgumentException("Parameters are of different types!");
         }
     }
     public static <T> int compareTo(T el1, T el2) {
-        System.out.println(el1.getClass());
         checkClass(el1, el2);
-        if (el1.equals(el2)) return 0;
         switch (el1.getClass().getName()) {
             case "java.lang.Integer", "int" -> {
                 return Integer.compare((int) el1, (int) el2);
