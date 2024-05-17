@@ -17,6 +17,11 @@ class FractionTest {
         assertTrue(Arrays.deepEquals(arr1, arr2));
     }
     @Test
+    void toStringTest() {
+        assertEquals("{3, 5}", new LongFraction(3, 5).toString());
+        assertEquals("{3, 51234567898765432123456789}", new BigFraction(BigInteger.valueOf(3), new BigInteger("51234567898765432123456789")).toString());
+    }
+    @Test
     void createFraction() {
         assertThrows(IllegalArgumentException.class, () -> new LongFraction(0, 0));
         assertFractionEquals(new Long[] {0L, 1L}, new LongFraction(0, 1));
@@ -116,11 +121,14 @@ class FractionTest {
         fraction = new LongFraction(1, 3);
         assertDeepArrayEquals(new int[][] {{}, {3}}, fraction.getCycle());
 
-        fraction = new LongFraction(1, 6);
-        assertDeepArrayEquals(new int[][] {{1}, {6}}, fraction.getCycle());
+        fraction = new LongFraction(109, 110);
+        assertDeepArrayEquals(new int[][] {{9, 9}, {0, 9}}, fraction.getCycle());
 
         BigFraction bigFraction = new BigFraction(BigInteger.ONE, BigInteger.valueOf(6));
         assertDeepArrayEquals(new int[][] {{1}, {6}}, bigFraction.getCycle());
+
+        bigFraction = new BigFraction(BigInteger.valueOf(109), BigInteger.valueOf(110));
+        assertDeepArrayEquals(new int[][] {{9, 9}, {0, 9}}, bigFraction.getCycle());
     }
 
     BigInteger[] bigArray(Long... longs) {

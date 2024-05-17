@@ -20,7 +20,6 @@ public abstract class Fraction<T> {
 
         return getInts(reciprocalCycle, i);
     }
-
     static int[][] convertToFraction(BigInteger divisible, BigInteger[] modCycle, int[] reciprocalCycle) {
         int i;
         for (i = 0; i < modCycle.length; i++) {
@@ -31,7 +30,6 @@ public abstract class Fraction<T> {
 
         return getInts(reciprocalCycle, i);
     }
-
     private static int[][] getInts(int[] reciprocalCycle, int i) {
         int[] nonCycle = new int[i];
         int[] cycle = new int[reciprocalCycle.length-i];
@@ -41,6 +39,9 @@ public abstract class Fraction<T> {
     }
     abstract Fraction<T> simplify();
     abstract T[] asArray();
+    public String toString() {
+        return "{" + numerator + ", " + denominator + "}";
+    }
 }
 
 class LongFraction extends Fraction<Long> {
@@ -89,7 +90,7 @@ class LongFraction extends Fraction<Long> {
         if (denominator.compareTo(1L) == 0) return new int[][] {};
         List<Integer> reciprocalCycle = new ArrayList<>();
         List<Long> modCycle = new ArrayList<>();
-        Long divisible = numerator;
+        Long divisible = numerator % denominator;
 
         while (!modCycle.contains(divisible) && divisible.compareTo(0L) != 0) {
             modCycle.add(divisible);
@@ -102,7 +103,6 @@ class LongFraction extends Fraction<Long> {
             reciprocalCycle.add((int) (divisible / denominator));
             divisible = divisible % denominator;
         }
-
         return convertToFraction(divisible, Converter.listToArr(modCycle), Converter.listToArr(reciprocalCycle));
     }
 }
