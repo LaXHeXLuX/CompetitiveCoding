@@ -88,20 +88,22 @@ class LongFraction extends Fraction<Long> {
     public int[][] getCycle() {
         if (numerator.compareTo(0L) <= 0) throw new RuntimeException("Numerator has to be more than 0");
         if (denominator.compareTo(1L) == 0) return new int[][] {};
+
+        LongFraction simple = this.simplify();
         List<Integer> reciprocalCycle = new ArrayList<>();
         List<Long> modCycle = new ArrayList<>();
-        Long divisible = numerator % denominator;
+        Long divisible = simple.numerator % simple.denominator;
 
         while (!modCycle.contains(divisible) && divisible.compareTo(0L) != 0) {
             modCycle.add(divisible);
             divisible *= 10;
-            while (divisible < denominator) {
+            while (divisible < simple.denominator) {
                 modCycle.add(divisible);
                 divisible *= 10;
                 reciprocalCycle.add(0);
             }
-            reciprocalCycle.add((int) (divisible / denominator));
-            divisible = divisible % denominator;
+            reciprocalCycle.add((int) (divisible / simple.denominator));
+            divisible = divisible % simple.denominator;
         }
         return convertToFraction(divisible, Converter.listToArr(modCycle), Converter.listToArr(reciprocalCycle));
     }
@@ -147,20 +149,22 @@ class BigFraction extends Fraction<BigInteger> {
     public int[][] getCycle() {
         if (numerator.compareTo(BigInteger.ZERO) <= 0) throw new RuntimeException("Numerator has to be more than 0");
         if (denominator.compareTo(BigInteger.ONE) == 0) return new int[][] {};
+
+        BigFraction simple = this.simplify();
         List<Integer> reciprocalCycle = new ArrayList<>();
         List<BigInteger> modCycle = new ArrayList<>();
-        BigInteger divisible = numerator;
+        BigInteger divisible = simple.numerator.remainder(simple.denominator);
 
         while (!modCycle.contains(divisible) && divisible.compareTo(BigInteger.ZERO) != 0) {
             modCycle.add(divisible);
             divisible = divisible.multiply(BigInteger.TEN);
-            while (divisible.compareTo(denominator) < 0) {
+            while (divisible.compareTo(simple.denominator) < 0) {
                 modCycle.add(divisible);
                 divisible = divisible.multiply(BigInteger.TEN);
                 reciprocalCycle.add(0);
             }
-            reciprocalCycle.add(divisible.divide(denominator).intValue());
-            divisible = divisible.remainder(denominator);
+            reciprocalCycle.add(divisible.divide(simple.denominator).intValue());
+            divisible = divisible.remainder(simple.denominator);
         }
 
         return convertToFraction(divisible, Converter.listToArr(modCycle), Converter.listToArr(reciprocalCycle));

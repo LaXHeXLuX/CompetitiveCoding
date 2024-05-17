@@ -115,7 +115,7 @@ class FractionTest {
         LongFraction fraction = new LongFraction(1, 1);
         assertArrayEquals(new int[][] {}, fraction.getCycle());
 
-        fraction = new LongFraction(1, 2);
+        fraction = new LongFraction(3, 2);
         assertDeepArrayEquals(new int[][] {{5}, {}}, fraction.getCycle());
 
         fraction = new LongFraction(1, 3);
@@ -124,7 +124,7 @@ class FractionTest {
         fraction = new LongFraction(109, 110);
         assertDeepArrayEquals(new int[][] {{9, 9}, {0, 9}}, fraction.getCycle());
 
-        BigFraction bigFraction = new BigFraction(BigInteger.ONE, BigInteger.valueOf(6));
+        BigFraction bigFraction = new BigFraction(BigInteger.valueOf(7), BigInteger.valueOf(6));
         assertDeepArrayEquals(new int[][] {{1}, {6}}, bigFraction.getCycle());
 
         bigFraction = new BigFraction(BigInteger.valueOf(109), BigInteger.valueOf(110));
