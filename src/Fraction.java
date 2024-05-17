@@ -1,4 +1,6 @@
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Fraction<T> {
     public T numerator;
@@ -8,6 +10,35 @@ public abstract class Fraction<T> {
     abstract Fraction<T> subtract(Fraction<T> fraction);
     abstract Fraction<T> multiply(Fraction<T> fraction);
     abstract Fraction<T> divide(Fraction<T> fraction);
+    static int[][] convertToFraction(long divisible, long[] modCycle, int[] reciprocalCycle) {
+        int i;
+        for (i = 0; i < modCycle.length; i++) {
+            if (modCycle[i] == divisible) {
+                break;
+            }
+        }
+
+        return getInts(reciprocalCycle, i);
+    }
+
+    static int[][] convertToFraction(BigInteger divisible, BigInteger[] modCycle, int[] reciprocalCycle) {
+        int i;
+        for (i = 0; i < modCycle.length; i++) {
+            if (modCycle[i].equals(divisible)) {
+                break;
+            }
+        }
+
+        return getInts(reciprocalCycle, i);
+    }
+
+    private static int[][] getInts(int[] reciprocalCycle, int i) {
+        int[] nonCycle = new int[i];
+        int[] cycle = new int[reciprocalCycle.length-i];
+        System.arraycopy(reciprocalCycle, 0, nonCycle, 0, nonCycle.length);
+        System.arraycopy(reciprocalCycle, i, cycle, 0, cycle.length);
+        return new int[][] {nonCycle, cycle};
+    }
     abstract Fraction<T> simplify();
     abstract T[] asArray();
 }
@@ -52,6 +83,28 @@ class LongFraction extends Fraction<Long> {
     public LongFraction divide(Fraction<Long> fraction) {
         return this.multiply(new LongFraction(fraction.denominator, fraction.numerator));
     }
+
+    public int[][] getCycle() {
+        if (numerator.compareTo(0L) <= 0) throw new RuntimeException("Numerator has to be more than 0");
+        if (denominator.compareTo(1L) == 0) return new int[][] {};
+        List<Integer> reciprocalCycle = new ArrayList<>();
+        List<Long> modCycle = new ArrayList<>();
+        Long divisible = numerator;
+
+        while (!modCycle.contains(divisible) && divisible.compareTo(0L) != 0) {
+            modCycle.add(divisible);
+            divisible *= 10;
+            while (divisible < denominator) {
+                modCycle.add(divisible);
+                divisible *= 10;
+                reciprocalCycle.add(0);
+            }
+            reciprocalCycle.add((int) (divisible / denominator));
+            divisible = divisible % denominator;
+        }
+
+        return convertToFraction(divisible, Converter.listToArr(modCycle), Converter.listToArr(reciprocalCycle));
+    }
 }
 
 class BigFraction extends Fraction<BigInteger> {
@@ -89,6 +142,28 @@ class BigFraction extends Fraction<BigInteger> {
     @Override
     public BigFraction divide(Fraction<BigInteger> fraction) {
         return this.multiply(new BigFraction(fraction.denominator, fraction.numerator));
+    }
+
+    public int[][] getCycle() {
+        if (numerator.compareTo(BigInteger.ZERO) <= 0) throw new RuntimeException("Numerator has to be more than 0");
+        if (denominator.compareTo(BigInteger.ONE) == 0) return new int[][] {};
+        List<Integer> reciprocalCycle = new ArrayList<>();
+        List<BigInteger> modCycle = new ArrayList<>();
+        BigInteger divisible = numerator;
+
+        while (!modCycle.contains(divisible) && divisible.compareTo(BigInteger.ZERO) != 0) {
+            modCycle.add(divisible);
+            divisible = divisible.multiply(BigInteger.TEN);
+            while (divisible.compareTo(denominator) < 0) {
+                modCycle.add(divisible);
+                divisible = divisible.multiply(BigInteger.TEN);
+                reciprocalCycle.add(0);
+            }
+            reciprocalCycle.add(divisible.divide(denominator).intValue());
+            divisible = divisible.remainder(denominator);
+        }
+
+        return convertToFraction(divisible, Converter.listToArr(modCycle), Converter.listToArr(reciprocalCycle));
     }
 
     @Override

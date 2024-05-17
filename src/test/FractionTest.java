@@ -1,15 +1,20 @@
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FractionTest {
-    <T> void assertFractionEquals(T[] fractionAsArray, Fraction<T> fraction) {
+    private <T> void assertFractionEquals(T[] fractionAsArray, Fraction<T> fraction) {
         assertArrayEquals(fractionAsArray, fraction.asArray());
     }
-    <T> void assertSimplifiedFractionEquals(T[] fractionAsArray, Fraction<T> fraction) {
+    private <T> void assertSimplifiedFractionEquals(T[] fractionAsArray, Fraction<T> fraction) {
         assertArrayEquals(fractionAsArray, fraction.simplify().asArray());
+    }
+
+    private <T> void assertDeepArrayEquals(T[] arr1, T[] arr2) {
+        assertTrue(Arrays.deepEquals(arr1, arr2));
     }
     @Test
     void createFraction() {
@@ -100,6 +105,24 @@ class FractionTest {
         quotient = fraction1.divide(fraction2);
         assertSimplifiedFractionEquals(new Long[] {3L, 2L}, quotient);
     }
+    @Test
+    void getCycle() {
+        LongFraction fraction = new LongFraction(1, 1);
+        assertArrayEquals(new int[][] {}, fraction.getCycle());
+
+        fraction = new LongFraction(1, 2);
+        assertDeepArrayEquals(new int[][] {{5}, {}}, fraction.getCycle());
+
+        fraction = new LongFraction(1, 3);
+        assertDeepArrayEquals(new int[][] {{}, {3}}, fraction.getCycle());
+
+        fraction = new LongFraction(1, 6);
+        assertDeepArrayEquals(new int[][] {{1}, {6}}, fraction.getCycle());
+
+        BigFraction bigFraction = new BigFraction(BigInteger.ONE, BigInteger.valueOf(6));
+        assertDeepArrayEquals(new int[][] {{1}, {6}}, bigFraction.getCycle());
+    }
+
     BigInteger[] bigArray(Long... longs) {
         BigInteger[] arr = new BigInteger[longs.length];
 
