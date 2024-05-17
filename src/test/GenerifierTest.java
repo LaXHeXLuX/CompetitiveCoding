@@ -8,6 +8,8 @@ class GenerifierTest {
 
     @Test
     void compareTo() {
+        assertThrows(IllegalArgumentException.class, () -> Generifier.compareTo(3, "3"));
+
         assertEquals(1, Generifier.compareTo(2, 1));
         assertEquals(1, Generifier.compareTo(1_000_000_000_000L, 500_000_000_000L));
         assertEquals(-1, Generifier.compareTo(2.5, 2.7));
@@ -18,5 +20,7 @@ class GenerifierTest {
         assertEquals(-1, Generifier.compareTo('a', 'b'));
         assertEquals(-15, Generifier.compareTo("hello", "world"));
         assertEquals(-1, Generifier.compareTo(BigInteger.ZERO, BigInteger.TWO));
+
+        assertThrows(IllegalArgumentException.class, () -> Generifier.compareTo(new Exception("e"), new Exception("a")));
     }
 }
