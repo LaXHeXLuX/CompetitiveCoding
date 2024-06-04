@@ -61,4 +61,19 @@ class ParserTest {
         fw2.close();
         assertArrayEquals(new int[] {123, 456}, Parser.parseInts(filename));
     }
+
+    @Test
+    void parseManyInts() throws IOException {
+        assertArrayEquals(new int[][] {}, Parser.parseManyInts(filename));
+
+        FileWriter fw1 = new FileWriter(filename);
+        fw1.write("1 2");
+        fw1.close();
+        assertArrayEquals(new int[][] {{1, 2}}, Parser.parseManyInts(filename));
+
+        FileWriter fw2 = new FileWriter(filename);
+        fw2.write("12 3\n456");
+        fw2.close();
+        assertArrayEquals(new int[][] {{12, 3}, {456}}, Parser.parseManyInts(filename));
+    }
 }

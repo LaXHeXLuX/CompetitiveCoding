@@ -35,4 +35,16 @@ public class Parser {
 
         return ints;
     }
+
+    public static int[][] parseManyInts(String filename) throws IOException {
+        String[] rows = parseStringRows(filename);
+        int[][] intRows = new int[rows.length][];
+
+        for (int i = 0; i < intRows.length; i++) {
+            String[] numbers = rows[i].split(" ");
+            intRows[i] = Converter.arrStringToArrInt(numbers);
+        }
+
+        return intRows;
+    }
 }
