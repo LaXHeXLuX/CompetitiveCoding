@@ -8,7 +8,7 @@ public class Converter {
         if (list.isEmpty()) {
             throw new IllegalArgumentException("listToArr: list cannot be empty!");
         }
-        return listToArr(list, list.get(0).getClass());
+        return listToArr(list, list.getFirst().getClass());
     }
     @SuppressWarnings("unchecked")
     public static <T> T listToArr(List<?> list, Class<?> type) {
@@ -19,7 +19,7 @@ public class Converter {
         if (list.isEmpty()) {
             throw new IllegalArgumentException("deepListToArr: list cannot be empty!");
         }
-        if (!(list.get(0) instanceof List)) {
+        if (!(list.getFirst() instanceof List)) {
             return toPrimitiveArray(listToArr(list));
         }
         Object[] arr = new Object[list.size()];
@@ -73,7 +73,7 @@ public class Converter {
     public static long convertFromBase(int[] digits, int base) {
         long convertedNumber = 0;
         for (int i = 0; i < digits.length; i++) {
-            convertedNumber += digits[digits.length-i-1] * Math.pow(base, i);
+            convertedNumber += (long) (digits[digits.length-i-1] * Math.pow(base, i));
         }
 
         return convertedNumber;
