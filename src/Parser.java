@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Parser {
 
-    public static String[] parseStringRows(String filename) throws IOException {
+    public static String[] parseStrings(String filename) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(filename));
         String line = br.readLine();
 
@@ -25,8 +25,21 @@ public class Parser {
         br.close();
         return Converter.listToArr(rows);
     }
+    public static String[][] parseManyStrings(String filename) throws IOException {
+        return parseManyStrings(filename, " ");
+    }
+    public static String[][] parseManyStrings(String filename, String splitter) throws IOException {
+        String[] rows = parseStrings(filename);
+        String[][] stringRows = new String[rows.length][];
+
+        for (int i = 0; i < stringRows.length; i++) {
+            stringRows[i] = rows[i].split(splitter);
+        }
+
+        return stringRows;
+    }
     public static int[] parseInts(String filename) throws IOException {
-        String[] rows = parseStringRows(filename);
+        String[] rows = parseStrings(filename);
         int[] ints = new int[rows.length];
 
         for (int i = 0; i < ints.length; i++) {
@@ -37,12 +50,14 @@ public class Parser {
     }
 
     public static int[][] parseManyInts(String filename) throws IOException {
-        String[] rows = parseStringRows(filename);
-        int[][] intRows = new int[rows.length][];
+        return parseManyInts(filename, " ");
+    }
+    public static int[][] parseManyInts(String filename, String splitter) throws IOException {
+        String[][] stringRows = parseManyStrings(filename, splitter);
+        int[][] intRows = new int[stringRows.length][];
 
         for (int i = 0; i < intRows.length; i++) {
-            String[] numbers = rows[i].split(" ");
-            intRows[i] = Converter.arrStringToArrInt(numbers);
+            intRows[i] = Converter.arrStringToArrInt(stringRows[i]);
         }
 
         return intRows;
