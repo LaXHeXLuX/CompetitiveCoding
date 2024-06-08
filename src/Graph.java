@@ -24,6 +24,14 @@ public class Graph {
     public int nodeCount() {
         return nodes.size();
     }
+    public boolean addNode(String node) {
+        return nodes.add(node);
+    }
+    public boolean addEdge(String from, String to, int weight) {
+        if (weight < 0) throw new IllegalArgumentException("Weight: " + weight + " - can't be negative!");
+        if (!nodes.contains(from) || !nodes.contains(to)) return false;
+        return edges.add(new Edge(from, to, weight));
+    }
     Set<Edge> outgoingEdges(String node) {
         Set<Edge> outgoingEdges = new HashSet<>();
 
@@ -102,5 +110,15 @@ class Edge {
         this.from = from;
         this.to = to;
         this.weight = weight;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Edge)) return false;
+        return this.equals((Edge) o);
+    }
+
+    private boolean equals(Edge edge) {
+        return from.equals(edge.from) && to.equals(edge.to) && weight == edge.weight;
     }
 }

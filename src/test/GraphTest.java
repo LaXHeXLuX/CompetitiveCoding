@@ -8,9 +8,17 @@ class GraphTest {
     @BeforeEach
     void makeGraphs() {
         graphs[0] = new Graph(0);
+
         graphs[1] = new Graph(1);
-        int[][] edgeMatrix2 = {{-1, 1}, {1, -1}};
-        graphs[2] = new Graph(edgeMatrix2);
+
+        graphs[2] = new Graph(1);
+        assertFalse(graphs[2].addNode("0"));
+        assertTrue(graphs[2].addNode("1"));
+        assertThrows(IllegalArgumentException.class, () -> graphs[2].addEdge("0", "0", -1));
+        assertFalse(graphs[2].addEdge("0", "2", 1));
+        assertTrue(graphs[2].addEdge("0", "1", 1));
+        assertTrue(graphs[2].addEdge("1", "0", 1));
+
         int[][] edgeMatrix3 = {{-1, -1, 1}, {-1, -1, -1}, {1, 1, -1}};
         graphs[3] = new Graph(edgeMatrix3);
     }
@@ -48,5 +56,11 @@ class GraphTest {
         assertEquals(6, bigGraph.djikstra("1", "0"));
         assertEquals(-1, bigGraph.djikstra("3", "0"));
         assertEquals(3, bigGraph.djikstra("4", "1"));
+    }
+    @Test
+    void edgeCompare() {
+        Edge edge1 = new Edge("a", "b", 1);
+        Edge edge2 = new Edge("a", "b", 1);
+        assertEquals(edge1, edge2);
     }
 }
