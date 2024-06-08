@@ -3,6 +3,14 @@ import java.util.*;
 public class Graph {
     private final Set<String> nodes = new HashSet<>();
     private final Set<Edge> edges = new HashSet<>();
+    public Graph() {
+
+    }
+    public Graph(int nodeCount) {
+        for (int i = 0; i < nodeCount; i++) {
+            nodes.add(String.valueOf(i));
+        }
+    }
     public Graph(int[][] edgeMatrix) {
         for (int i = 0; i < edgeMatrix.length; i++) {
             nodes.add(String.valueOf(i));
@@ -16,14 +24,6 @@ public class Graph {
             }
         }
     }
-    public Graph(int nodeCount) {
-        for (int i = 0; i < nodeCount; i++) {
-            nodes.add(String.valueOf(i));
-        }
-    }
-    public int nodeCount() {
-        return nodes.size();
-    }
     public boolean addNode(String node) {
         return nodes.add(node);
     }
@@ -31,6 +31,9 @@ public class Graph {
         if (weight < 0) throw new IllegalArgumentException("Weight: " + weight + " - can't be negative!");
         if (!nodes.contains(from) || !nodes.contains(to)) return false;
         return edges.add(new Edge(from, to, weight));
+    }
+    public int nodeCount() {
+        return nodes.size();
     }
     Set<Edge> outgoingEdges(String node) {
         Set<Edge> outgoingEdges = new HashSet<>();

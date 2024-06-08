@@ -7,7 +7,7 @@ class GraphTest {
     Graph[] graphs = new Graph[4];
     @BeforeEach
     void makeGraphs() {
-        graphs[0] = new Graph(0);
+        graphs[0] = new Graph();
 
         graphs[1] = new Graph(1);
 
