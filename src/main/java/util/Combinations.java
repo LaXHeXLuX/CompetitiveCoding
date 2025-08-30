@@ -1,9 +1,8 @@
 package util;
 
+import java.lang.reflect.Array;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Combinations {
 
@@ -61,58 +60,57 @@ public class Combinations {
 
         return Converter.listToArr(chosen);
     }
-    public static int[][] findPermutations(int[] arr) {
-        if (arr.length == 0) return new int[][]{};
-        if (arr.length == 1) return new int[][]{arr};
-        int[][] permutations = new int[(int) Combinations.factorial(arr.length)][];
-        arr = ArrayFunctions.mergeSort(arr);
-        int[] newArr0 = new int[arr.length];
-        System.arraycopy(arr, 0, newArr0, 0, newArr0.length);
-        permutations[0] = newArr0;
-        int i;
-        for (i = 1; i < permutations.length; i++) {
-            arr = swapAndSort(arr);
-            int[] newArr = new int[arr.length];
-            System.arraycopy(arr, 0, newArr, 0, newArr.length);
-            if (Arrays.equals(permutations[i - 1], newArr)) break;
-            permutations[i] = newArr;
-        }
-        int[][] realPermutations = new int[i][];
-        System.arraycopy(permutations, 0, realPermutations, 0, i);
-        return realPermutations;
+    public static <T> T[] permutations(T arr) {
+        return Converter.deepToPrimitiveArray(permutations(Converter.toWrapperArray(arr)));
     }
-    private static int[] swapAndSort(int[] arr) {
-        int i;
-        for (i = arr.length - 2; i >= 0; i--) {
-            if (arr[i] < arr[i + 1]) {
-                break;
+    @SuppressWarnings("unchecked")
+    public static <T> T[][] permutations(T[] arr) {
+        Class<?> type = arr.getClass().getComponentType();
+        T[][] output = (T[][]) Array.newInstance(type, 1, arr.length);
+        if (arr.length == 0) return output;
+        if (arr.length == 1) {
+            output[0][0] = arr[0];
+            return output;
+        }
+
+        List<T[]> outputList = new ArrayList<>();
+        T[] sorted = ArrayFunctions.mergeSort(arr);
+        for (int i = 0; i < sorted.length; i++) {
+            T el = sorted[i];
+            if (i > 0 && el.equals(sorted[i-1])) continue;
+            T[] others = (T[]) Array.newInstance(type, sorted.length-1);
+            System.arraycopy(sorted, 0, others, 0, i);
+            System.arraycopy(sorted, i+1, others, i, sorted.length-i-1);
+            T[][] othersPermutations = permutations(others);
+            for (T[] op : othersPermutations) {
+                T[] perm = (T[]) Array.newInstance(type, sorted.length);
+                perm[0] = el;
+                System.arraycopy(op, 0, perm, 1, op.length);
+                outputList.add(perm);
             }
         }
-        if (i < 0) return arr;
-        int ceilingIndex = i + 1;
-        for (int j = i+1; j < arr.length; j++) {
-            if (arr[j] <= arr[i]) continue;
-            if (arr[j] < arr[ceilingIndex]) ceilingIndex = j;
-        }
-        int temp = arr[i];
-        arr[i] = arr[ceilingIndex];
-        arr[ceilingIndex] = temp;
-
-        int[] arrToBeSorted = new int[arr.length-i-1];
-        System.arraycopy(arr, i+1, arrToBeSorted, 0, arrToBeSorted.length);
-        arrToBeSorted = ArrayFunctions.mergeSort(arrToBeSorted);
-        int[] restOfArr = new int[i+1];
-        System.arraycopy(arr, 0, restOfArr, 0, restOfArr.length);
-        return ArrayFunctions.concatenate(restOfArr, arrToBeSorted);
+        output = (T[][]) Array.newInstance(type, outputList.size(), outputList.getFirst().length);
+        return outputList.toArray(output);
     }
-    public static boolean isPermutationOf(long n1, long n2) {
-        return isPermutationOf(Converter.digitArray(n1), Converter.digitArray(n2));
+    public static boolean isPermutation(long n1, long n2) {
+        return isPermutation(Converter.digitArray(n1), Converter.digitArray(n2));
     }
-    public static boolean isPermutationOf(int[] arr1, int[] arr2) {
+    public static <T> boolean isPermutation(T arr1, T arr2) {
+        return isPermutation(Converter.toWrapperArray(arr1), Converter.toWrapperArray(arr2));
+    }
+    public static <T> boolean isPermutation(T[] arr1, T[] arr2) {
         if (arr1.length != arr2.length) return false;
-        arr1 = ArrayFunctions.mergeSort(arr1);
-        arr2 = ArrayFunctions.mergeSort(arr2);
-        return Arrays.equals(arr1, arr2);
+        Map<T, Integer> countMap = new HashMap<>();
+        for (T el : arr1) {
+            countMap.put(el, countMap.getOrDefault(el, 0) + 1);
+        }
+        for (T el : arr2) {
+            if (!countMap.containsKey(el)) return false;
+            countMap.put(el, countMap.get(el) - 1);
+            if (countMap.get(el) == 0) countMap.remove(el);
+        }
+
+        return countMap.isEmpty();
     }
     public static int[][] combinationsOfGrowingNumbers(int start, int end, int amount) {
         if (amount == 1) {

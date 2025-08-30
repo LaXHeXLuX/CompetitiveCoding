@@ -62,7 +62,7 @@ class CombinationsTest {
         assertEquals(3628800, Combinations.nChooseMOrderMattersLong(10, 10));
     }
     @Test
-    void ChooseNElements() {
+    void chooseNElements() {
         assertArrayEquals(new int[][] {}, Combinations.chooseNElements(new int[] {1, 2, 3}, 0, false));
         assertArrayEquals(new int[][] {{1}, {2}, {3}}, Combinations.chooseNElements(new int[] {1, 2, 3}, 1, false));
         assertArrayEquals(new int[][] {{1}, {2}, {3}}, Combinations.chooseNElements(new int[] {1, 2, 3}, 1, true));
@@ -71,25 +71,24 @@ class CombinationsTest {
         assertArrayEquals(new int[][] {{1, 2, 3}, {1, 3, 2}, {2, 1, 3}, {2, 3, 1}, {3, 1, 2}, {3, 2, 1}}, Combinations.chooseNElements(new int[] {1, 2, 3}, 3, true));
     }
     @Test
-    void findPermutations() {
-        assertArrayEquals(new int[][] {}, Combinations.findPermutations(new int[] {}));
-        assertArrayEquals(new int[][] {{1}}, Combinations.findPermutations(new int[] {1}));
-        assertArrayEquals(new int[][] {{1, 2}, {2, 1}}, Combinations.findPermutations(new int[] {1, 2}));
-        assertArrayEquals(new int[][] {{2, 2}}, Combinations.findPermutations(new int[] {2, 2}));
-        assertArrayEquals(new int[][] {{1, 2, 2}, {2, 1, 2}, {2, 2, 1}}, Combinations.findPermutations(new int[] {1, 2, 2}));
+    void permutations() {
+        assertArrayEquals(new int[][] {{}}, Combinations.permutations(new int[] {}));
+        assertArrayEquals(new int[][] {{0}}, Combinations.permutations(new int[] {0}));
+        assertArrayEquals(new int[][] {{1, 2}, {2, 1}}, Combinations.permutations(new int[] {1, 2}));
+        assertArrayEquals(new int[][] {{2, 2}}, Combinations.permutations(new int[] {2, 2}));
+        assertArrayEquals(new int[][] {{1, 1, 2}, {1, 2, 1}, {2, 1, 1}}, Combinations.permutations(new int[] {1, 1, 2}));
     }
     @Test
-    void isPermutationOf() {
-        assertTrue(Combinations.isPermutationOf(new int[] {1, 2, 3}, new int[] {3, 1, 2}));
-        assertFalse(Combinations.isPermutationOf(new int[] {1}, new int[] {1, 1, 1}));
-        assertFalse(Combinations.isPermutationOf(new int[] {}, new int[] {0}));
+    void isPermutation() {
+        assertTrue(Combinations.isPermutation(new int[] {}, new int[] {}));
+        assertFalse(Combinations.isPermutation(new int[] {}, new int[] {0}));
+        assertFalse(Combinations.isPermutation(new int[] {1, 2, 3}, new int[] {1, 2, 4}));
+        assertTrue(Combinations.isPermutation(new int[] {1, 2, 3}, new int[] {3, 1, 2}));
+        assertTrue(Combinations.isPermutation(new int[] {1, 1, 1, 2, 2}, new int[] {2, 1, 1, 1, 2}));
 
-        for (int i = 0; i < 20; i++) {
-            assertTrue(Combinations.isPermutationOf(i, i));
-        }
-        assertTrue(Combinations.isPermutationOf(9876, 6978));
-        assertFalse(Combinations.isPermutationOf(1, 111));
-        assertFalse(Combinations.isPermutationOf(123, 143));
+        assertTrue(Combinations.isPermutation(9876, 6978));
+        assertFalse(Combinations.isPermutation(1, 111));
+        assertFalse(Combinations.isPermutation(123, 143));
     }
     @Test
     void combinationsOfGrowingNumbers() {
