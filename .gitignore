@@ -1,10 +1,10 @@
 # IntelliJ
-/.idea/
-/out/
+.idea
+out
 
 # Gradle
-.gradle/
-build/
+.gradle
+build
 
 # OS
 .DS_Store
