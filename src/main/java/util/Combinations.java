@@ -112,6 +112,41 @@ public class Combinations {
 
         return countMap.isEmpty();
     }
+    public static <T> T nthPermutation(T arr, long n) {
+        return Converter.toPrimitiveArray(nthPermutation(Converter.toWrapperArray(arr), n));
+    }
+    @SuppressWarnings("unchecked")
+    public static <T> T[] nthPermutation(T[] arr, long n) {
+        T[] newArr = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length);
+        System.arraycopy(arr, 0, newArr, 0, newArr.length);
+        if (n == 0 || arr.length < 2) return newArr;
+        int[] plan = permutationPlan(n);
+        for (int i = 0; i < plan.length; i++) {
+            if (plan[i] == 0) continue;
+            T el = newArr[i + plan[i]];
+            T[] result = ArrayFunctions.subArray(newArr, i, newArr.length-1);
+            result = ArrayFunctions.removeIndex(result, plan[i]);
+            newArr[i] = el;
+            System.arraycopy(result, 0, newArr, i+1, result.length);
+        }
+        return newArr;
+    }
+    private static int[] permutationPlan(long n) {
+        long prod = 1;
+        int i;
+        for (i = 2; i < n; i++) {
+            prod *= i;
+            if (prod > n) break;
+        }
+        int[] plan = new int[i-1];
+        for (i = 0; i < plan.length; i++) {
+            long f = factorial(plan.length - i);
+            plan[i] = Math.toIntExact(n / f);
+            n = n % f;
+            if (n == 0) break;
+        }
+        return plan;
+    }
     public static int[][] combinationsOfGrowingNumbers(int start, int end, int amount) {
         if (amount == 1) {
             int[][] combinations = new int[end-start+1][];

@@ -21,6 +21,7 @@ class PrimesTest {
         assertTrue(manyPrimes[33331]);
         assertFalse(manyPrimes[34567]);
         assertFalse(manyPrimes[99999]);
+        assertFalse(manyPrimes[manyPrimes.length-1]);
     }
     @Test
     void findPrimeFactors() {
@@ -36,6 +37,8 @@ class PrimesTest {
     void isPrime() {
         assertFalse(Primes.isPrime(1));
         assertTrue(Primes.isPrime(2));
+        assertFalse(Primes.isPrime(120));
+        assertFalse(Primes.isPrime(121));
 
         assertTrue(Primes.isPrime(289586599663L));
         assertTrue(Primes.isPrime(217203134209L));

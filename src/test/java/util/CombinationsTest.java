@@ -3,6 +3,7 @@ package util;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -89,6 +90,16 @@ class CombinationsTest {
         assertTrue(Combinations.isPermutation(9876, 6978));
         assertFalse(Combinations.isPermutation(1, 111));
         assertFalse(Combinations.isPermutation(123, 143));
+    }
+    @Test
+    void nthPermutation() {
+        int[] arr = {0};
+        assertArrayEquals(new int[] {0}, Combinations.nthPermutation(arr, 0));
+        assertArrayEquals(new int[] {0}, Combinations.nthPermutation(arr, 100));
+        arr = new int[] {1, 2};
+        assertArrayEquals(new int[] {2, 1}, Combinations.nthPermutation(arr, 1));
+        arr = new int[] {1, 2, 3, 4};
+        assertArrayEquals(new int[] {4, 3, 1, 2}, Combinations.nthPermutation(arr, 22));
     }
     @Test
     void combinationsOfGrowingNumbers() {

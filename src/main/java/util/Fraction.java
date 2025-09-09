@@ -43,5 +43,6 @@ public abstract class Fraction<T> {
     public String toString() {
         return "{" + numerator + ", " + denominator + "}";
     }
+    abstract int compareTo(Fraction<T> fraction);
 }
 

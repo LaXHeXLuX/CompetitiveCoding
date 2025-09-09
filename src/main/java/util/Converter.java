@@ -14,21 +14,25 @@ public class Converter {
     }
     @SuppressWarnings("unchecked")
     public static <T> T listToArr(List<?> list, Class<?> type) {
-        T[] arr = (T[]) java.lang.reflect.Array.newInstance(type, list.size());
+        T[] arr = (T[]) Array.newInstance(type, list.size());
         return toPrimitiveArray(list.toArray(arr));
     }
+    @SuppressWarnings("unchecked")
     public static <T> T deepListToArr(List<?> list) {
         if (list.isEmpty()) {
             throw new IllegalArgumentException("deepListToArr: list cannot be empty!");
         }
         if (!(list.getFirst() instanceof List)) {
-            return toPrimitiveArray(listToArr(list));
+            return listToArr(list);
         }
-        Object[] arr = new Object[list.size()];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = deepListToArr((List<?>) list.get(i));
+        Object[] subArrays = new Object[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            subArrays[i] = deepListToArr((List<?>) list.get(i));
         }
-        return deepToPrimitiveArray(arr);
+        Class<?> componentType = subArrays[0].getClass();
+        Object[] result = (Object[]) Array.newInstance(componentType, list.size());
+        System.arraycopy(subArrays, 0, result, 0, subArrays.length);
+        return (T) result;
     }
     public static int[] arrStringToArrInt(String[] arr) {
         int[] arrInt = new int[arr.length];
@@ -45,7 +49,7 @@ public class Converter {
             n /= 10;
         }
 
-        return ArrayFunctions.reverseArray((int[]) listToArr(digitArray));
+        return listToArr(digitArray.reversed());
     }
     public static int[] digitArray(BigInteger n) {
         if (n.equals(BigInteger.ZERO)) return new int[] {0};
@@ -56,7 +60,7 @@ public class Converter {
         }
         return ArrayFunctions.reverseArray((int[]) listToArr(digitArray));
     }
-    public static long digitFromArrayLong(int[] digitArray) {
+    public static long fromDigitArray(int[] digitArray) {
         long n = 0;
         for (int digit : digitArray) n = 10*n + digit;
         return n;

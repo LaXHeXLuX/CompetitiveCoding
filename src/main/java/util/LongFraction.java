@@ -21,6 +21,11 @@ public class LongFraction extends Fraction<Long> {
     }
 
     @Override
+    public int compareTo(Fraction<Long> fraction) {
+        return Long.compare(this.numerator * fraction.denominator, fraction.numerator * this.denominator);
+    }
+
+    @Override
     public LongFraction add(Fraction<Long> fraction) {
         long gcd = Divisors.greatestCommonDivisor(denominator, fraction.denominator);
         long newDenominator = denominator * fraction.denominator / gcd;

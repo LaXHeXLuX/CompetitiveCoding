@@ -71,6 +71,7 @@ class ConverterTest {
         List<Long> listLong = new ArrayList<>();
         listLong.add(1_000_000L); listLong.add(1_000_000_000_000L); listLong.add(1_000_000_000_000_000_000L);
         assertArrayEquals(new long[] {1_000_000L, 1_000_000_000_000L, 1_000_000_000_000_000_000L}, Converter.listToArr(listLong));
+        assertArrayEquals(new long[] {1_000_000L, 1_000_000_000_000L, 1_000_000_000_000_000_000L}, Converter.listToArr(listLong, Long.class));
 
         List<int[]> listArrInt = new ArrayList<>();
         listArrInt.add(new int[] {1, 2, 3}); listArrInt.add(new int[] {-1000});
@@ -146,10 +147,10 @@ class ConverterTest {
         assertArrayEquals(new int[0], Converter.arrStringToArrInt(new String[0]));
     }
     @Test
-    void digitFromArrayLong() {
+    void fromDigitArray() {
         int[] digits = {1, 2, 3, 4};
-        assertEquals(1234, Converter.digitFromArrayLong(digits));
-        assertEquals(0, Converter.digitFromArrayLong(new int[0]));
+        assertEquals(1234, Converter.fromDigitArray(digits));
+        assertEquals(0, Converter.fromDigitArray(new int[0]));
     }
     @Test
     void convertTo() {

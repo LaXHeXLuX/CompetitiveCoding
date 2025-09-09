@@ -82,4 +82,9 @@ public class BigFraction extends Fraction<BigInteger> {
     public BigInteger[] asArray() {
         return new BigInteger[]{numerator, denominator};
     }
+
+    @Override
+    public int compareTo(Fraction<BigInteger> fraction) {
+        return this.numerator.multiply(fraction.denominator).compareTo(fraction.numerator.multiply(this.denominator));
+    }
 }

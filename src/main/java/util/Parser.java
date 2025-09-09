@@ -8,29 +8,32 @@ import java.util.List;
 
 public class Parser {
 
-    public static String[] parseStrings(String filename) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filename));
-        String line = br.readLine();
-
-        if (line == null) {
-            br.close();
-            return new String[0];
-        }
-
+    public static String[] parseStrings(String filename) {
         List<String> rows = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line = br.readLine();
 
-        while (line != null) {
-            rows.add(line);
-            line = br.readLine();
+            if (line == null) {
+                br.close();
+                return new String[0];
+            }
+
+            while (line != null) {
+                rows.add(line);
+                line = br.readLine();
+            }
+
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        br.close();
-        return Converter.listToArr(rows);
+        return Converter.listToArr(rows, String.class);
     }
-    public static String[][] parseManyStrings(String filename) throws IOException {
+    public static String[][] parseManyStrings(String filename) {
         return parseManyStrings(filename, " ");
     }
-    public static String[][] parseManyStrings(String filename, String splitter) throws IOException {
+    public static String[][] parseManyStrings(String filename, String splitter) {
         String[] rows = parseStrings(filename);
         String[][] stringRows = new String[rows.length][];
 
@@ -40,7 +43,7 @@ public class Parser {
 
         return stringRows;
     }
-    public static int[] parseInts(String filename) throws IOException {
+    public static int[] parseInts(String filename) {
         String[] rows = parseStrings(filename);
         int[] ints = new int[rows.length];
 
@@ -51,10 +54,10 @@ public class Parser {
         return ints;
     }
 
-    public static int[][] parseManyInts(String filename) throws IOException {
+    public static int[][] parseManyInts(String filename) {
         return parseManyInts(filename, " ");
     }
-    public static int[][] parseManyInts(String filename, String splitter) throws IOException {
+    public static int[][] parseManyInts(String filename, String splitter) {
         String[][] stringRows = parseManyStrings(filename, splitter);
         int[][] intRows = new int[stringRows.length][];
 

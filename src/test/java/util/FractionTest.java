@@ -14,12 +14,12 @@ class FractionTest {
     private <T> void assertSimplifiedFractionEquals(T[] fractionAsArray, Fraction<T> fraction) {
         assertArrayEquals(fractionAsArray, fraction.simplify().asArray());
     }
-
     private <T> void assertDeepArrayEquals(T[] arr1, T[] arr2) {
         assertTrue(Arrays.deepEquals(arr1, arr2));
     }
     @Test
     void toStringTest() {
+        assertEquals("{1, 1}", new LongFraction(1, 1).toString());
         assertEquals("{3, 5}", new LongFraction(3, 5).toString());
         assertEquals("{3, 51234567898765432123456789}", new BigFraction(BigInteger.valueOf(3), new BigInteger("51234567898765432123456789")).toString());
     }
@@ -242,5 +242,19 @@ class FractionTest {
         fraction2 = new BigFraction(BigInteger.ONE, BigInteger.valueOf(3));
         quotient = fraction1.divide(fraction2);
         assertSimplifiedFractionEquals(bigArray(3L, 2L), quotient);
+    }
+    @Test
+    void compareTo() {
+        LongFraction lf1 = new LongFraction(0, 1);
+        LongFraction lf2 = new LongFraction(1, 1);
+        assertTrue(lf1.compareTo(lf2) < 0);
+        lf2 = new LongFraction(0, 2);
+        assertEquals(0, lf1.compareTo(lf2));
+
+        BigFraction bf1 = new BigFraction(BigInteger.ZERO, BigInteger.ONE);
+        BigFraction bf2 = new BigFraction(BigInteger.ONE, BigInteger.ONE);
+        assertTrue(bf1.compareTo(bf2) < 0);
+        bf2 = new BigFraction(BigInteger.ZERO, BigInteger.TWO);
+        assertEquals(0, bf1.compareTo(bf2));
     }
 }
