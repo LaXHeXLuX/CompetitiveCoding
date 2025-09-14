@@ -28,6 +28,8 @@ class DivisorsTest {
         for (int i = 1; i < 10; i++) {
             assertEquals(i, Divisors.greatestCommonDivisor(i, i));
         }
+        assertEquals(11, Divisors.greatestCommonDivisor(11, 0));
+        assertEquals(11, Divisors.greatestCommonDivisor(0, 11));
         assertEquals(1, Divisors.greatestCommonDivisor(3, 5));
         assertEquals(10, Divisors.greatestCommonDivisor(100, 10));
         assertEquals(4, Divisors.greatestCommonDivisor(28, 60));

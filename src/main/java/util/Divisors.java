@@ -45,20 +45,12 @@ public class Divisors {
         }
         return a;
     }
-    private static long greatestCommonDivisorHelper(long a, long b) {
-        if (b == 0) return a;
-        return greatestCommonDivisorHelper(b, a%b);
-    }
     public static BigInteger greatestBigCommonDivisor(BigInteger a, BigInteger b) {
-        if (a.compareTo(b) < 0) {
-            BigInteger temp = a;
-            a = b;
-            b = temp;
+        while (!b.equals(BigInteger.ZERO)) {
+            BigInteger t = b;
+            b = a.remainder(b);
+            a = t;
         }
-        return greatestBigCommonDivisorHelper(a, b);
-    }
-    private static BigInteger greatestBigCommonDivisorHelper(BigInteger a, BigInteger b) {
-        if (b.equals(BigInteger.ZERO)) return a;
-        return greatestBigCommonDivisorHelper(b, a.remainder(b));
+        return a;
     }
 }
