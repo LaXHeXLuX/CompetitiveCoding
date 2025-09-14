@@ -38,12 +38,12 @@ public class Divisors {
         return sum;
     }
     public static long greatestCommonDivisor(long a, long b) {
-        if (a < b) {
-            long temp = a;
-            a = b;
-            b = temp;
+        while (b != 0) {
+            long t = b;
+            b = a % b;
+            a = t;
         }
-        return greatestCommonDivisorHelper(a, b);
+        return a;
     }
     private static long greatestCommonDivisorHelper(long a, long b) {
         if (b == 0) return a;
