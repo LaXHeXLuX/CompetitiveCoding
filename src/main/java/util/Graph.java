@@ -5,6 +5,8 @@ import java.util.*;
 public class Graph {
     private final Set<String> nodes = new HashSet<>();
     private final Set<Edge> edges = new HashSet<>();
+    private final Map<String, Set<Edge>> outgoing = new HashMap<>();
+    private final Map<String, Set<Edge>> incoming = new HashMap<>();
     public Graph() {
 
     }
@@ -21,7 +23,7 @@ public class Graph {
         for (int i = 0; i < edgeMatrix.length; i++) {
             for (int j = 0; j < edgeMatrix[i].length; j++) {
                 if (edgeMatrix[i][j] >= 0) {
-                    edges.add(new Edge(String.valueOf(i), String.valueOf(j), edgeMatrix[i][j]));
+                    addEdge(String.valueOf(i), String.valueOf(j), edgeMatrix[i][j]);
                 }
             }
         }
@@ -30,80 +32,59 @@ public class Graph {
         return nodes.add(node);
     }
     public boolean addEdge(String from, String to, int weight) {
-        if (weight < 0) throw new IllegalArgumentException("Weight: " + weight + " - can't be negative!");
+        if (weight < 0) throw new IllegalArgumentException("Weight can't be negative");
         if (!nodes.contains(from) || !nodes.contains(to)) return false;
-        return edges.add(new Edge(from, to, weight));
+
+        Edge e = new Edge(from, to, weight);
+        edges.add(e);
+
+        outgoing.computeIfAbsent(from, _ -> new HashSet<>()).add(e);
+        incoming.computeIfAbsent(to, _ -> new HashSet<>()).add(e);
+
+        return true;
     }
     public int nodeCount() {
         return nodes.size();
     }
     Set<Edge> outgoingEdges(String node) {
-        Set<Edge> outgoingEdges = new HashSet<>();
-
-        for (Edge currentEdge : edges) {
-            if (currentEdge.from.equals(node))
-                outgoingEdges.add(currentEdge);
-        }
-
-        return outgoingEdges;
+        return outgoing.getOrDefault(node, Collections.emptySet());
     }
     Set<Edge> incomingEdges(String node) {
-        Set<Edge> incomingEdges = new HashSet<>();
-
-        for (Edge currentEdge : edges) {
-            if (currentEdge.to.equals(node))
-                incomingEdges.add(currentEdge);
-        }
-
-        return incomingEdges;
+        return incoming.getOrDefault(node, Collections.emptySet());
     }
-
     public int djikstra(String origin, String destination) {
         Map<String, Integer> distances = new HashMap<>();
         for (String node : nodes) {
-            distances.put(node, -1);
+            distances.put(node, Integer.MAX_VALUE);
         }
         distances.put(origin, 0);
 
+        record NodeDist(String node, int distance) {}
+        PriorityQueue<NodeDist> pq = new PriorityQueue<>(Comparator.comparingInt(NodeDist::distance));
+        pq.add(new NodeDist(origin, 0));
+
         Set<String> visited = new HashSet<>();
 
-        while (visited.size() < nodes.size()) {
-            String node = nextClosestNode(distances, visited);
-            if (node == null) break;
-            if (node.equals(destination))
-                break;
-            visited.add(node);
-            updateDistances(distances, visited, node);
+        while (!pq.isEmpty()) {
+            NodeDist current = pq.poll();
+            if (visited.contains(current.node())) continue;
+            visited.add(current.node());
+
+            if (current.node().equals(destination)) {
+                return current.distance();
+            }
+
+            for (Edge edge : outgoingEdges(current.node())) {
+                if (visited.contains(edge.to)) continue;
+                int newDist = current.distance() + edge.weight;
+                if (newDist < distances.get(edge.to)) {
+                    distances.put(edge.to, newDist);
+                    pq.add(new NodeDist(edge.to, newDist));
+                }
+            }
         }
 
         return distances.get(destination);
-    }
-
-    private String nextClosestNode(Map<String, Integer> distances, Set<String> visited) {
-        String closestNode = null;
-
-        for (String node : distances.keySet()) {
-            if (distances.get(node) < 0) continue;
-            if (visited.contains(node)) continue;
-
-            if (closestNode == null || distances.get(closestNode) > distances.get(node))
-                closestNode = node;
-        }
-
-        return closestNode;
-    }
-
-    private void updateDistances(Map<String, Integer> distances, Set<String> visited, String node) {
-        int distance = distances.get(node);
-        Set<Edge> edges = outgoingEdges(node);
-
-        for (Edge edge : edges) {
-            if (visited.contains(edge.to)) continue;
-
-            int neighborDistance = distance + edge.weight;
-            if (distances.get(edge.to) == -1 || distances.get(edge.to) > neighborDistance)
-                distances.put(edge.to, neighborDistance);
-        }
     }
 }
 

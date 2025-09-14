@@ -50,14 +50,14 @@ class GraphTest {
     void djikstra() {
         assertEquals(1, graphs[2].djikstra("0", "1"));
         assertEquals(2, graphs[3].djikstra("0", "1"));
-        assertEquals(-1, graphs[3].djikstra("1", "0"));
+        assertEquals(Integer.MAX_VALUE, graphs[3].djikstra("1", "0"));
 
         int[][] edgeMatrix = {{-1, 1, -1, -1, -1}, {-1, -1, 3, -1, -1}, {5, -1, -1, -1, 1}, {-1, -1, -1, -1, -1}, {2, 7, -1, -1, -1}};
         Graph bigGraph = new Graph(edgeMatrix);
         assertEquals(0, bigGraph.djikstra("0", "0"));
         assertEquals(4, bigGraph.djikstra("0", "2"));
         assertEquals(6, bigGraph.djikstra("1", "0"));
-        assertEquals(-1, bigGraph.djikstra("3", "0"));
+        assertEquals(Integer.MAX_VALUE, bigGraph.djikstra("3", "0"));
         assertEquals(3, bigGraph.djikstra("4", "1"));
     }
     @Test
